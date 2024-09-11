@@ -25,6 +25,11 @@ const LoginPage = () => {
         localStorage.setItem("token", response.access.token);
         Cookies.set("token", response.access.token, { expires: 7 });
         localStorage.setItem("userId", response.user._id)
+        localStorage.setItem("firstName", response.user.firstName)
+        localStorage.setItem("lastName", response.user.firstName)
+        localStorage.setItem("profilePic", response.profilePic)
+        localStorage.setItem("email", response.user.email)
+        localStorage.setItem("phone", response.user.phone)
         toast.success("Login successful");
 
         // Set token in headers for future requests

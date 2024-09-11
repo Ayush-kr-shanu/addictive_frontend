@@ -19,3 +19,13 @@ export const Login = async (data) => {
     throw error;
   }
 }
+
+export const User = async (data) => {
+  try {
+    const response = await axiosInstance.get(`/user/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error during user fetch:", error);
+    throw error;
+  }
+}
