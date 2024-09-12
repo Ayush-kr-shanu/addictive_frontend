@@ -11,7 +11,13 @@ function Addpost() {
   const userId = localStorage.getItem("userId");
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.size > 6 * 1024 * 1024) {
+      toast.error("Please upload a video less than 6 MB.");
+      return;
+    }
+  
+    setFile(selectedFile);
   };
 
   const handleFileUpload = async () => {

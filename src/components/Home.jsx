@@ -8,6 +8,7 @@ function HomePage() {
   const [post, setPost] = useState([]);
   const userId = localStorage.getItem("userId");
   const [isEditing, setIsEditing] = useState(false);
+  const loggedIn = Cookies.get("token");
 
   useEffect(() => {
     if (userId) {
@@ -45,6 +46,11 @@ function HomePage() {
     const userId = localStorage.getItem("userId");
     const folder = "profile-pic";
 
+    if (file.size > 1 * 1024 * 1024) {
+      alert("Please upload a picture less than 1 MB.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("userId", userId);
@@ -60,9 +66,9 @@ function HomePage() {
   };
 
   const handleUpdateUserData = async () => {
-    const {firstName, lastName, email, phone, bio, profilePicture } = userData;
-    console.log(userData)
-  
+    const { firstName, lastName, email, phone, bio, profilePicture } = userData;
+    console.log(userData);
+
     // Prepare the data to be updated
     const updatedData = {
       firstName,
@@ -70,9 +76,9 @@ function HomePage() {
       email,
       phone,
       bio,
-      profilePicture
+      profilePicture,
     };
-  
+
     try {
       const token = Cookies.get("token");
       const response = await UpdateUser(userId, updatedData, token);
@@ -218,15 +224,18 @@ function HomePage() {
         </div>
       </Col>
       <Col xs={12} md={6} style={{ paddingRight: "10%", overflowx: "hidden" }}>
-        <div>
-          <div style={{ marginTop: "20px" }}>
-            <a href="/addpost" style={{ marginRight: "20px" }}>
-              <button>Add New Post</button>
+        <div style={{ marginTop: "20px" }}>
+          {!loggedIn && ( // If no token, show the login button
+            <a href="/login" style={{ marginRight: "20px" }}>
+              <button>Login</button>
             </a>
-            <a href="/my-page">
-            <button >My Posts</button>
-            </a>
-          </div>
+          )}
+          <a href="/addpost" style={{ marginRight: "20px" }}>
+            <button>Add New Post</button>
+          </a>
+          <a href="/my-page">
+            <button>My Posts</button>
+          </a>
         </div>
         <div>
           {post.map((item) => (
