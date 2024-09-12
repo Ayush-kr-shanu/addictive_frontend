@@ -93,6 +93,12 @@ function HomePage() {
     setIsEditing(!isEditing);
   };
 
+  const logOut = () => {
+    Cookies.remove("token");
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
   return (
     <Row>
       <Col xs={12} md={3}>
@@ -148,7 +154,7 @@ function HomePage() {
               </button>
             </div>
           ) : (
-            <div>
+            <div style={{ marginLeft: "20px" }}>
               <input
                 type="text"
                 value={userData.firstName}
@@ -225,17 +231,23 @@ function HomePage() {
       </Col>
       <Col xs={12} md={6} style={{ paddingRight: "10%", overflowx: "hidden" }}>
         <div style={{ marginTop: "20px" }}>
-          {!loggedIn && ( // If no token, show the login button
-            <a href="/login" style={{ marginRight: "20px" }}>
-              <button>Login</button>
-            </a>
-          )}
           <a href="/addpost" style={{ marginRight: "20px" }}>
             <button>Add New Post</button>
           </a>
           <a href="/my-page">
             <button>My Posts</button>
           </a>
+
+          {!loggedIn ? (
+            // If no token, show the login button
+            <a href="/login" style={{ marginRight: "20px" }}>
+              <button>Login</button>
+            </a>
+          ) : (
+            <a href="/login" style={{marginRight:"20px"}}>
+              <button onClick={logOut}>Logout</button>
+            </a>
+          )}
         </div>
         <div>
           {post.map((item) => (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import {Post, UploadFile } from "../API";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function Addpost() {
@@ -9,6 +9,7 @@ function Addpost() {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
   const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -58,7 +59,7 @@ function Addpost() {
       setDescription("");
       toast.success("Created Post successfully")
       setFile(null);
-      Navigate("/")
+      navigate("/")
     } catch (error) {
       console.error("Error creating post:", error);
     }

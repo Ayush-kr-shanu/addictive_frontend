@@ -101,7 +101,7 @@ function MyPage() {
           </div>
         </div>
         <div>
-          {post.map((item) => (
+          {post.length > 0 ? post.map((item) => (
             <div key={item._id} style={{ marginTop: "20px" }}>
               <img
                 src={item.userId.profilePictureUrl}
@@ -173,7 +173,9 @@ function MyPage() {
 
               <hr style={{ marginTop: "10px", marginBottom: "10px" }} />
             </div>
-          ))}
+          )): 
+            <div style={{ marginTop: "20px" }}>No posts found</div>
+          }
         </div>
       </Col>
     </Row>
